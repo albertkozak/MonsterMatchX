@@ -23,6 +23,12 @@ export default function App() {
     require("./assets/monster2_feet.png"),
     require("./assets/monster3_feet.png")
   ];
+
+  const generateMonsters = () => {
+    setHeadImage(Math.floor(Math.random() * Math.floor(3)));
+    setBodyImage(Math.floor(Math.random() * Math.floor(3)));
+    setFeetImage(Math.floor(Math.random() * Math.floor(3)));
+  };
   return (
     <SafeAreaView style={styles.container}>
       <View>
@@ -30,7 +36,7 @@ export default function App() {
         <Monster imageSrc={monsterBody} />
         <Monster imageSrc={monsterFeet} />
       </View>
-      <Button title="PLAY" />
+      <Button title="PLAY" onPress={generateMonsters} />
     </SafeAreaView>
   );
 }
