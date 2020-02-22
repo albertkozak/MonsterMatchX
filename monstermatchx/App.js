@@ -1,5 +1,5 @@
-import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import React, { useState, useEffect } from "react";
+import { StyleSheet, Text, View, SafeAreaView, Button } from "react-native";
 import Constants from "expo-constants";
 import Monster from "./src/components/Monsters";
 
@@ -7,6 +7,7 @@ export default function App() {
   const [headImage, setHeadImage] = useState(0);
   const [bodyImage, setBodyImage] = useState(0);
   const [feetImage, setFeetImage] = useState(0);
+  const [matched, setMatched] = useState(false);
 
   const monsterHead = [
     reuire("./assets/monster1_head.png"),
@@ -25,10 +26,20 @@ export default function App() {
   ];
 
   const generateMonsters = () => {
+    if (matched) {
+      setMatched(false);
+    }
     setHeadImage(Math.floor(Math.random() * Math.floor(3)));
     setBodyImage(Math.floor(Math.random() * Math.floor(3)));
     setFeetImage(Math.floor(Math.random() * Math.floor(3)));
   };
+
+  useEffect(() => {
+    if (headImage === bodyImage && headImage === feetImage) {
+      setMatched(true);
+    }
+  });
+
   return (
     <SafeAreaView style={styles.container}>
       <View>
@@ -36,6 +47,7 @@ export default function App() {
         <Monster imageSrc={monsterBody} />
         <Monster imageSrc={monsterFeet} />
       </View>
+      {matched ? <Text>MATCH!</Text> : <Text></Text>}
       <Button title="PLAY" onPress={generateMonsters} />
     </SafeAreaView>
   );
